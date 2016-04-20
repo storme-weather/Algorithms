@@ -1,0 +1,52 @@
+- Thus far the class has only gone over polynomial time algorithms
+	- Ex) O(nm^2), O(n), O(n^2), O(n log n)
+- This allows fairly large inputs to be solved efficiently. However, can most interesting computational problem be solved in polynomial time? Most likely no and some problems are too difficult
+- Example would be the Traveling salesman problem (TSP)
+	- Input: undirected graph with weights on the edges
+	- Output: shortest cycle which visits each vertex exactly once
+	- Idea: There are some set of cities that a salesman has to visit, and the output will produce the most efficient way to visit each city
+	- Best known algorithm is O(n2^n)
+- Another example is the clique problem
+	- Input: undirected graph G = (V, E)
+	- Output: largest subset C of V such that every pair of vertices in C has an edge between them (C is caled a clique)
+	- Best known algorithm is O(n2^n)
+- This begs the question if we can prove that it is not possible to develop a polynomial algorithm. Proving this would be difficult. Luckily it is possible to show that some problems are equivalently
+  difficult.
+	- If a polynomail time algorithm is given for one problem, then all of those "equivalent" problems would also have a polynomial time algorithm. If one of them is shown to not have a polynomial time
+	  algorithm, then all of the problems don't have a polynomial time algorithm
+- If we can show that some problem is equivalent to other well studied problems without efficient algorithms, then that strongly suggests that the problem does not have an efficient algorithm either
+- A decision problem is a problem in which we want to determine the answer to a yes/no question regarding the input
+	Ex) Decision problem using clique:
+		- Input: an undirected graph G and a positive integer k
+		- Question: Does G contain a clique of size at least k?
+		- Output: Yes or No
+	     Consider optimization variants of the clique problem:
+	     	- What is the largest k such that G contains a clique of size k?
+		- What is the largest clique of G?
+- The decision problem is the easiest to compute, the first optimization variant is the next easiest, and the second optimization is the hardest to compute.
+	- If we can show that the decision problem can be solved in polynomial time, then we can solve the optimization problems in polynomial time. If we can solve the decision problem in polynomial time,
+	  run this algorithm for each k that is in {1,..,n} and output the largest k so that the algorithm returns yes. If we solve the 1st optimization problem, then find the size of the largest clique.
+	  Delete an edge, and again find the size of the largest clique. If it stays the same, edge is not in the maximum clique. If it deceases, then it is in the max clique. Repeat until all the edges 
+	  are found.
+- Decision problems belong to an important class of problems known as NP. Problems in NP can all be solved in non-deterministic polynomial time.
+- Intuitively, a solution can be verified in polynomial time
+	Ex) if someone gives a subset of a graph C, can verify it is a clique of size at least k in polynomial time
+	Ex) If someone gives us a TSP tour T, can verify its length is at most k in polynomial time
+- This implies that the decision variants of clique and TSP are in NP
+- Another important class of problems is P. If a decision problem PI can be solved in polynomial time, then PI is in P. Every problem in P is also in NP (P is a subset of NP). If the proble can be solved in
+  polynomial time, then a solution can be verified in polynomial time. A major open question is there exists a problem that is in NP that is not in P. Basically, does P = NP?
+- Reducing PI' to PI
+	x'     x
+	--> f --> A for PI = (YES OR NO)
+- PI' is polynomial time reducible to PI (PI' <= PI) iff there is a polynomial time function f that maps inputs x' for PI' into inputs x for PI such that for any x' we have PI'(x') = PI(f(x'))
+	- Need the following to hold true:
+		- convert x' into an input x such that x' is a "yes instance" for PI' iff x is a "yes instance" for PI
+	- If PI' <= PI, then the following facts are true:
+		1) if PI is in P, then so is PI'
+		2) if PI is in NP, then so is PI'
+		3) if PI'' <= PI', then PI'' <= PI (transitivity)
+- An independent set of a graph is a subset of vertices such that no pair of vertices has an edge between them. The independent set problem (IS) is to determine if a graph G has an independent set of size at
+  least k.
+- Show that Clique <= IS
+	- Show that any input (G = (V,E), k) to the clique problem can be converted in polynomial time to an input (G' = (V',E'), k') to the IS problem
+	- It will be done in a way so that G has a clique of size at least k iff G' has an independent set of size at least k'
