@@ -1,0 +1,68 @@
+Graphs (Chapter 22)
+- Representations of graphs:
+	- G = (V, E)
+		- G = graph
+		- V = vertexes
+		- E = edges
+	- Adjacency-lists provide a compact way to represent "sparse" graphs
+		- Sparse: type of graph where |E| is way less than |V|^2
+		- graph G consists of an array Adj of |V| lists (one for each vertex). Each list will contain a vertices that V has an edge with
+		- If G is a directed graph, the sum of the lengths of all adjacency lists is |E|, while an undirected graph will contain 2|E| elements
+		- Adjacency list has a nice property where the memory amount is Theta(V + E)
+		- Disadvantage of an adjacency list is there no quick way to determine an edge exist between 2 vertices.
+		- Ex)
+		  1 -> {2, 5}
+		  2 -> {1, 5, 3, 4}
+		  3 -> {2, 4}
+		  4 -> {2, 5, 3}
+		  5 -> {4, 1, 2}
+	- Adjacency-matrix: representation wanted when a graph is "dense". Easy to tell if an edge exist between 2 vertices
+		- Dense: type of graph where |E| is close to |V|^2
+		- An adjacency matrix allows quick lookup if an edge exists between 2 vertices, but the memory needed for an adjacency matrix is |V|^2
+		-Ex)
+		    1    2    3    4    5
+		----------------------------
+		 1| 0    1    0    0    1
+		  |
+		 2| 1    0    1    1    1
+		  |
+		 3| 0    1    0    1    0
+		  |
+		 4| 0    1    1    0    1
+		  |
+		 5| 1    1    0    1    0
+	- In-degree: in a directed graph, this means the amount of vertices that have an edge pointing to some vertex v
+		Ex) Vertex v has 2 vertices that have an edge pointing to v. The in-degree would be 2
+	- Out-degree: opposite of in-degree
+	- Multigraph: A graph where there can be duplicate (u,v) edges. This includes self-loops as well
+- Breadth-first search
+	- Simple algorithm that other graph algorithms take ideas from (Prim's and Dijkstra's)
+	- Algorithm starts by picking a some vertex s to be the source, where we start systematically explore edges of G to find every reachable vertex from s
+	- BFS also computes the distance (smallest # of edges) from s to each reachable vertex
+	- For any vertex v that is reachable from s, the simple path taken in BFS is the shortest path from s to v
+	- This works on both directed and undirected graphs
+	- Algorithm (English):
+		- Maintain a queue Q of nodes that we need to visit.
+			- Nodes are added as they are discovered
+			- Also store the value of the node + 1
+				Ex) Have a vertex a with value 2. Discover vertex b from a. Vertex b is stored in the queue with value 3
+	- Each vertex is visited at most once and is enqueued/dequeued at most once (O(N) time)
+	- Each edge is checked to see if the neighbor has already been visited (O(M) time)
+	- Therefore the running time is O(n + m) = O(|V| + |E|)
+
+- Depth-first search
+	- Strategy of DFS is to search deeper into the graph whenever possible
+	- explores edges out of the most recently discovered vertex v that still has unexplored edges leaving it
+	- once all of v's edges have been explored, the search backtracks to explore edges leaving the vertex from which v was discovered
+	- This continues until we have discovered all vertices that are reachable from the s vertex (source)
+	- Maintain a "discovery time" and "finishing time" of each node
+
+- Some graph properties
+	- Path: sequence of vertices V_1, ..., V_k such that (v_i, v_i+1) is an edge for all i in the set of {1, ..., k-1}
+	- Simple path: is all vertices in the path are distinct
+	- Cycle: is V_1 = V_K
+	- Acyclic: a graph with no cycles
+	- Directed acyclic graph (DAG): a directed acyclic graph...
+
+- Topological Sort:
+	
